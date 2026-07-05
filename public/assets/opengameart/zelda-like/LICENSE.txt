@@ -1,0 +1,8 @@
+Zelda-like tilesets and sprites
+
+Source: https://opengameart.org/content/zelda-like-tilesets-and-sprites
+Author: ArMM1998
+License: CC0
+
+Downloaded for SunnyFarm as the initial prototype pixel-art tileset and sprite source.
+

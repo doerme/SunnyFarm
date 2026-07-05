@@ -15,26 +15,27 @@
 5. 补充必要测试或调试工具。
 6. 更新文档和任务记录。
 
-## 首个里程碑：可玩农场切片
+## 首个里程碑：可玩养鸡切片
 
 验收清单：
 
 - 游戏可以启动到农场地图。
-- 玩家可以移动并被障碍阻挡。
-- 玩家可以切换工具。
-- 玩家可以翻土、播种、浇水和收获。
-- 作物可以跨天成长。
+- 玩家可以使用移动端触摸摇杆移动。
+- 玩家靠近鸡舍后可以喂鸡。
+- 玩家点击下一天后，已喂鸡数量可以转化为鸡蛋。
+- 玩家靠近商店后可以买饲料、买鸡、卖鸡蛋和卖鸡。
 - 背包数量正确变化。
 - 刷新页面后可以读取存档。
+- 可以清除存档重新开始。
 
 ## 后续里程碑
 
 ### M2：经营反馈
 
-- 商店买卖。
-- 金币增长。
+- 更完整的商店买卖反馈。
+- 金币增长动画。
 - 基础音效。
-- 作物成长动画或阶段贴图。
+- 鸡动画、鸡舍反馈和产蛋表现。
 
 ### M3：农场扩展
 
@@ -61,9 +62,9 @@
 
 使用简洁动词开头：
 
-- `docs: add initial project documentation`
-- `feat: add farm tile interaction`
-- `fix: correct crop growth calculation`
+- `feat: add chicken farming prototype`
+- `feat: add shop transactions`
+- `fix: correct egg production calculation`
 - `chore: configure vite and phaser`
 
 ## 每次功能完成前检查

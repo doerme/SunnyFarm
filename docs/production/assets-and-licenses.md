@@ -6,6 +6,8 @@
 - 来源：https://opengameart.org/content/zelda-like-tilesets-and-sprites
 - 作者：ArMM1998
 - 许可证：CC0
+- 原始压缩包：`assets/art/source/opengameart/zelda-like/gfx.zip`
+- 运行时素材：`public/assets/opengameart/zelda-like/`
 
 该素材适合作为太阳农场早期原型的像素 tileset、角色和环境资源。虽然 CC0 允许较自由地使用和修改素材，项目仍应在文档中保留来源记录，方便追踪和替换。
 
@@ -36,7 +38,8 @@ assets/
 
 | 资产 | 路径 | 来源 | 作者 | 许可证 | 备注 |
 | --- | --- | --- | --- | --- | --- |
-| Zelda-like tilesets and sprites | assets/art/source/ | OpenGameArt | ArMM1998 | CC0 | 初始原型素材 |
+| Zelda-like tilesets and sprites | assets/art/source/opengameart/zelda-like/ | OpenGameArt | ArMM1998 | CC0 | 初始原型素材 |
+| Zelda-like runtime PNGs | public/assets/opengameart/zelda-like/ | OpenGameArt | ArMM1998 | CC0 | Phaser 运行时加载 |
 
 ## 导入规范
 
@@ -44,4 +47,3 @@ assets/
 - Phaser 可直接使用的切图、图集或压缩版本放在 `assets/art/tilesets/` 或 `assets/art/sprites/`。
 - tilemap 文件放在 `assets/tilemaps/`。
 - 若使用 TexturePacker 或类似工具生成 atlas，需要提交源图和生成配置。
-
