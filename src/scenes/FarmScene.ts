@@ -62,8 +62,8 @@ export class FarmScene extends Phaser.Scene {
     this.add.rectangle(195, 705, 390, 18, 0xc79c56).setAlpha(0.45);
     this.add.rectangle(195, 288, 330, 190, 0x6fb867).setAlpha(0.55);
 
-    this.add.image(104, 232, 'coop').setDepth(3);
-    this.add.image(292, 236, 'shop').setDepth(3);
+    this.drawMedievalCoop(104, 238);
+    this.drawMedievalShop(292, 238);
     this.createCoopChickens();
 
     this.add.text(104, 318, '鸡舍', {
@@ -84,20 +84,54 @@ export class FarmScene extends Phaser.Scene {
 
     this.add.image(50, 510, 'tree').setDepth(3);
     this.add.image(338, 524, 'tree').setDepth(3);
-    this.add.image(72, 114, 'tree').setScale(0.85).setDepth(3);
+    this.drawFenceLine(50, 202, 5);
+    this.drawFenceLine(238, 202, 5);
 
     this.add.rectangle(104, 318, 130, 70, 0xffffff, 0.001).setName('coop-zone');
     this.add.rectangle(292, 322, 130, 78, 0xffffff, 0.001).setName('shop-zone');
   }
 
   private createPlayer(state: GameState): void {
-    this.player = this.physics.add.sprite(state.player.x, state.player.y, 'player');
+    this.createFarmerAnimations();
+    this.player = this.physics.add.sprite(state.player.x, state.player.y, 'green-cap-farmer', 1);
     this.player.setCollideWorldBounds(true);
+    this.player.setScale(2.5);
     this.player.setDepth(10);
-    this.player.body.setSize(24, 28);
-    this.player.body.setOffset(6, 14);
+    this.player.body.setSize(16, 18);
+    this.player.body.setOffset(0, 0);
     this.lastSavedX = state.player.x;
     this.lastSavedY = state.player.y;
+  }
+
+  private drawMedievalCoop(centerX: number, centerY: number): void {
+    this.add.image(centerX, centerY - 6, 'coop').setDepth(4);
+    this.add.image(centerX - 68, centerY + 26, 'lpc-medieval-fence', 1)
+      .setScale(0.9)
+      .setDepth(3);
+    this.add.image(centerX + 68, centerY + 26, 'lpc-medieval-fence', 1)
+      .setScale(0.9)
+      .setDepth(3);
+    this.add.image(centerX - 62, centerY + 54, 'lpc-medieval-decor', 337)
+      .setScale(1.1)
+      .setDepth(4);
+  }
+
+  private drawMedievalShop(centerX: number, centerY: number): void {
+    this.add.image(centerX, centerY - 2, 'shop').setDepth(4);
+    this.add.image(centerX - 58, centerY + 54, 'lpc-medieval-decor', 545)
+      .setScale(1)
+      .setDepth(5);
+    this.add.image(centerX + 56, centerY + 54, 'lpc-medieval-decor', 546)
+      .setScale(1)
+      .setDepth(5);
+  }
+
+  private drawFenceLine(startX: number, y: number, count: number): void {
+    for (let i = 0; i < count; i += 1) {
+      this.add.image(startX + i * 28, y, 'lpc-medieval-fence', 1)
+        .setScale(0.95)
+        .setDepth(2);
+    }
   }
 
   private createCoopChickens(): void {
@@ -139,6 +173,37 @@ export class FarmScene extends Phaser.Scene {
       key: 'chicken-walk-right',
       frames: this.anims.generateFrameNumbers('lpc-chicken', { frames: [6, 7, 8, 7] }),
       frameRate: 5,
+      repeat: -1
+    });
+  }
+
+  private createFarmerAnimations(): void {
+    if (this.anims.exists('farmer-walk-down')) {
+      return;
+    }
+
+    this.anims.create({
+      key: 'farmer-walk-down',
+      frames: this.anims.generateFrameNumbers('green-cap-farmer', { frames: [0, 1, 2, 1] }),
+      frameRate: 7,
+      repeat: -1
+    });
+    this.anims.create({
+      key: 'farmer-walk-left',
+      frames: this.anims.generateFrameNumbers('green-cap-farmer', { frames: [3, 4, 5, 4] }),
+      frameRate: 7,
+      repeat: -1
+    });
+    this.anims.create({
+      key: 'farmer-walk-right',
+      frames: this.anims.generateFrameNumbers('green-cap-farmer', { frames: [6, 7, 8, 7] }),
+      frameRate: 7,
+      repeat: -1
+    });
+    this.anims.create({
+      key: 'farmer-walk-up',
+      frames: this.anims.generateFrameNumbers('green-cap-farmer', { frames: [9, 10, 11, 10] }),
+      frameRate: 7,
       repeat: -1
     });
   }
@@ -224,7 +289,7 @@ export class FarmScene extends Phaser.Scene {
       const normalizedY = inputVector.y / length;
       this.player.x += normalizedX * PLAYER_SPEED * (delta / 1000);
       this.player.y += normalizedY * PLAYER_SPEED * (delta / 1000);
-      this.player.setFlipX(normalizedX < -0.05);
+      this.playFarmerWalk(normalizedX, normalizedY);
     } else if (this.moveTarget) {
       const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.moveTarget.x, this.moveTarget.y);
       if (distance < 6) {
@@ -234,13 +299,24 @@ export class FarmScene extends Phaser.Scene {
         const angle = Phaser.Math.Angle.Between(this.player.x, this.player.y, this.moveTarget.x, this.moveTarget.y);
         this.player.x += Math.cos(angle) * step;
         this.player.y += Math.sin(angle) * step;
-        this.player.setFlipX(Math.cos(angle) < -0.05);
+        this.playFarmerWalk(Math.cos(angle), Math.sin(angle));
       }
+    } else {
+      this.player.anims.stop();
     }
 
     this.player.x = Phaser.Math.Clamp(this.player.x, 24, 366);
     this.player.y = Phaser.Math.Clamp(this.player.y, 120, 760);
     this.maybeSavePlayerPosition();
+  }
+
+  private playFarmerWalk(x: number, y: number): void {
+    if (Math.abs(x) > Math.abs(y)) {
+      this.player.anims.play(x < 0 ? 'farmer-walk-left' : 'farmer-walk-right', true);
+      return;
+    }
+
+    this.player.anims.play(y < 0 ? 'farmer-walk-up' : 'farmer-walk-down', true);
   }
 
   private getKeyboardVector(): JoystickVector {

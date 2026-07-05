@@ -1,0 +1,8 @@
+Green Cap Character 16x18
+
+Source: https://opengameart.org/content/green-cap-character-16x18
+Author: isaiah658
+License: CC0
+
+This asset is used as the farmer/player sprite in SunnyFarm.
+

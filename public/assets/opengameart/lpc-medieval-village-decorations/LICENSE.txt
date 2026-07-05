@@ -1,0 +1,8 @@
+LPC Medieval Village Decorations
+
+Source: https://opengameart.org/content/lpc-medieval-village-decorations
+License used by SunnyFarm: CC-BY-SA 4.0
+
+Full author and attribution details are preserved in CREDITS-decorations-medieval.txt
+next to the runtime spritesheets.
+

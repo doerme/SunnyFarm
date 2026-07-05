@@ -23,6 +23,28 @@
 
 该素材用于鸡舍旁的鸡角色表现。由于选择 CC-BY 3.0 使用，发布时需要保留 Daniel Eddeland 的署名。
 
+## 农夫素材
+
+- 名称：Green Cap Character 16x18
+- 来源：https://opengameart.org/content/green-cap-character-16x18
+- 作者：isaiah658
+- 许可证：CC0
+- 源文件：`assets/art/source/opengameart/green-cap-character-16x18/green-cap-character.png`
+- 运行时素材：`public/assets/opengameart/green-cap-character-16x18/green-cap-character.png`
+
+该素材用于玩家农夫角色，并按 16x18 帧加载为行走动画。
+
+## 建筑与环境素材
+
+- 名称：LPC Medieval Village Decorations
+- 来源：https://opengameart.org/content/lpc-medieval-village-decorations
+- 许可证：CC-BY-SA 4.0
+- 署名文件：`CREDITS-decorations-medieval.txt`
+- 源文件：`assets/art/source/opengameart/lpc-medieval-village-decorations/`
+- 运行时素材：`public/assets/opengameart/lpc-medieval-village-decorations/`
+
+该素材用于鸡舍、商店、栅栏、井、草堆、木桶等建筑和环境装饰。发布时必须保留完整 credits 文件。
+
 ## 素材使用原则
 
 - 所有第三方素材必须记录来源、作者、许可证和下载日期。
@@ -54,6 +76,10 @@ assets/
 | Zelda-like runtime PNGs | public/assets/opengameart/zelda-like/ | OpenGameArt | ArMM1998 | CC0 | Phaser 运行时加载 |
 | LPC Chicken Rework | assets/art/source/opengameart/lpc-chicken-rework/chicken.png | OpenGameArt | Daniel Eddeland | CC-BY 3.0 | 鸡角色素材 |
 | LPC Chicken runtime PNG | public/assets/opengameart/lpc-chicken-rework/chicken.png | OpenGameArt | Daniel Eddeland | CC-BY 3.0 | Phaser 运行时加载 |
+| Green Cap Character 16x18 | assets/art/source/opengameart/green-cap-character-16x18/green-cap-character.png | OpenGameArt | isaiah658 | CC0 | 玩家农夫素材 |
+| Green Cap Character runtime PNG | public/assets/opengameart/green-cap-character-16x18/green-cap-character.png | OpenGameArt | isaiah658 | CC0 | Phaser 运行时加载 |
+| LPC Medieval Village Decorations | assets/art/source/opengameart/lpc-medieval-village-decorations/ | OpenGameArt | 见 CREDITS 文件 | CC-BY-SA 4.0 | 建筑与环境素材 |
+| LPC Medieval runtime PNGs | public/assets/opengameart/lpc-medieval-village-decorations/ | OpenGameArt | 见 CREDITS 文件 | CC-BY-SA 4.0 | Phaser 运行时加载 |
 
 ## 导入规范
 

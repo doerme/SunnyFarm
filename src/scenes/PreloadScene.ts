@@ -36,6 +36,24 @@ export class PreloadScene extends Phaser.Scene {
       margin: 0,
       spacing: 0
     });
+    this.load.spritesheet('green-cap-farmer', '/assets/opengameart/green-cap-character-16x18/green-cap-character.png', {
+      frameWidth: 16,
+      frameHeight: 18,
+      margin: 0,
+      spacing: 0
+    });
+    this.load.spritesheet('lpc-medieval-decor', '/assets/opengameart/lpc-medieval-village-decorations/decorations-medieval.png', {
+      frameWidth: 32,
+      frameHeight: 32,
+      margin: 0,
+      spacing: 0
+    });
+    this.load.spritesheet('lpc-medieval-fence', '/assets/opengameart/lpc-medieval-village-decorations/fence_medieval.png', {
+      frameWidth: 32,
+      frameHeight: 32,
+      margin: 0,
+      spacing: 0
+    });
     this.createPixelTextures();
   }
 
