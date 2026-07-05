@@ -14,6 +14,7 @@ type InteractionTarget = 'coop' | 'shop' | null;
 export class FarmScene extends Phaser.Scene {
   private store!: GameStore;
   private player!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+  private coopChickens: Array<{ sprite: Phaser.GameObjects.Sprite; minX: number; maxX: number; speed: number; direction: 1 | -1 }> = [];
   private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   private wasd?: Record<'up' | 'down' | 'left' | 'right', Phaser.Input.Keyboard.Key>;
   private joystick: JoystickVector = { x: 0, y: 0 };
@@ -42,6 +43,7 @@ export class FarmScene extends Phaser.Scene {
 
   update(_time: number, delta: number): void {
     this.updateMovement(delta);
+    this.updateCoopChickens(delta);
     this.updateInteractionTarget();
   }
 
@@ -60,10 +62,11 @@ export class FarmScene extends Phaser.Scene {
     this.add.rectangle(195, 705, 390, 18, 0xc79c56).setAlpha(0.45);
     this.add.rectangle(195, 288, 330, 190, 0x6fb867).setAlpha(0.55);
 
-    this.drawPixelBuilding(104, 236, 0xb55a32, 0xef6349, 0x5b3b2d);
-    this.drawPixelBuilding(292, 236, 0xf5df88, 0x4f86cf, 0x6a4630);
+    this.add.image(104, 232, 'coop').setDepth(3);
+    this.add.image(292, 236, 'shop').setDepth(3);
+    this.createCoopChickens();
 
-    this.add.text(104, 292, '鸡舍', {
+    this.add.text(104, 318, '鸡舍', {
       fontFamily: 'sans-serif',
       fontSize: '16px',
       color: '#3a291b',
@@ -71,7 +74,7 @@ export class FarmScene extends Phaser.Scene {
       strokeThickness: 4
     }).setOrigin(0.5).setDepth(3);
 
-    this.add.text(292, 298, '商店', {
+    this.add.text(292, 318, '商店', {
       fontFamily: 'sans-serif',
       fontSize: '16px',
       color: '#1f355c',
@@ -79,24 +82,79 @@ export class FarmScene extends Phaser.Scene {
       strokeThickness: 4
     }).setOrigin(0.5).setDepth(3);
 
-    this.add.image(50, 510, 'oga-overworld', 246).setScale(3.4).setDepth(3);
-    this.add.image(338, 524, 'oga-overworld', 246).setScale(3.4).setDepth(3);
-    this.add.image(72, 114, 'oga-overworld', 246).setScale(2.8).setDepth(3);
-    this.add.image(58, 126, 'oga-overworld', 286).setScale(2.8).setDepth(2);
+    this.add.image(50, 510, 'tree').setDepth(3);
+    this.add.image(338, 524, 'tree').setDepth(3);
+    this.add.image(72, 114, 'tree').setScale(0.85).setDepth(3);
 
     this.add.rectangle(104, 318, 130, 70, 0xffffff, 0.001).setName('coop-zone');
     this.add.rectangle(292, 322, 130, 78, 0xffffff, 0.001).setName('shop-zone');
   }
 
   private createPlayer(state: GameState): void {
-    this.player = this.physics.add.sprite(state.player.x, state.player.y, 'oga-character', 34);
+    this.player = this.physics.add.sprite(state.player.x, state.player.y, 'player');
     this.player.setCollideWorldBounds(true);
-    this.player.setScale(2);
     this.player.setDepth(10);
     this.player.body.setSize(24, 28);
-    this.player.body.setOffset(4, 2);
+    this.player.body.setOffset(6, 14);
     this.lastSavedX = state.player.x;
     this.lastSavedY = state.player.y;
+  }
+
+  private createCoopChickens(): void {
+    this.createChickenAnimations();
+    this.coopChickens = [
+      {
+        sprite: this.add.sprite(78, 266, 'lpc-chicken', 4).setScale(1.25).setDepth(5),
+        minX: 72,
+        maxX: 112,
+        speed: 18,
+        direction: 1
+      },
+      {
+        sprite: this.add.sprite(130, 276, 'lpc-chicken', 4).setScale(1.25).setDepth(5),
+        minX: 104,
+        maxX: 142,
+        speed: 14,
+        direction: -1
+      }
+    ];
+
+    for (const chicken of this.coopChickens) {
+      chicken.sprite.anims.play(chicken.direction > 0 ? 'chicken-walk-right' : 'chicken-walk-left');
+    }
+  }
+
+  private createChickenAnimations(): void {
+    if (this.anims.exists('chicken-walk-left')) {
+      return;
+    }
+
+    this.anims.create({
+      key: 'chicken-walk-left',
+      frames: this.anims.generateFrameNumbers('lpc-chicken', { frames: [3, 4, 5, 4] }),
+      frameRate: 5,
+      repeat: -1
+    });
+    this.anims.create({
+      key: 'chicken-walk-right',
+      frames: this.anims.generateFrameNumbers('lpc-chicken', { frames: [6, 7, 8, 7] }),
+      frameRate: 5,
+      repeat: -1
+    });
+  }
+
+  private updateCoopChickens(delta: number): void {
+    for (const chicken of this.coopChickens) {
+      chicken.sprite.x += chicken.direction * chicken.speed * (delta / 1000);
+
+      if (chicken.sprite.x >= chicken.maxX) {
+        chicken.direction = -1;
+        chicken.sprite.anims.play('chicken-walk-left', true);
+      } else if (chicken.sprite.x <= chicken.minX) {
+        chicken.direction = 1;
+        chicken.sprite.anims.play('chicken-walk-right', true);
+      }
+    }
   }
 
   private drawTiledGround(startX: number, startY: number, tileSize: number, rows: number, frame: number): void {
@@ -108,44 +166,6 @@ export class FarmScene extends Phaser.Scene {
           .setDepth(0);
       }
     }
-  }
-
-  private drawPixelBuilding(
-    centerX: number,
-    centerY: number,
-    wallTint: number,
-    roofTint: number,
-    trimTint: number
-  ): void {
-    const tileScale = 2.8;
-    const tile = 16 * tileScale;
-    const left = centerX - tile;
-    const top = centerY - tile * 0.5;
-
-    for (let row = 0; row < 2; row += 1) {
-      for (let col = 0; col < 3; col += 1) {
-        this.add.image(left + col * tile, top + row * tile, 'oga-overworld', 405)
-          .setScale(tileScale)
-          .setTint(wallTint)
-          .setDepth(2);
-      }
-    }
-
-    for (let col = 0; col < 3; col += 1) {
-      this.add.image(left + col * tile, top - tile * 0.72, 'oga-overworld', 324)
-        .setScale(tileScale)
-        .setTint(roofTint)
-        .setDepth(3);
-    }
-
-    this.add.image(centerX, centerY + tile * 0.46, 'oga-overworld', 492)
-      .setScale(tileScale)
-      .setTint(trimTint)
-      .setDepth(4);
-    this.add.image(centerX - tile * 0.62, centerY - tile * 0.08, 'oga-overworld', 451)
-      .setScale(tileScale * 0.72)
-      .setTint(trimTint)
-      .setDepth(4);
   }
 
   private setupInput(): void {

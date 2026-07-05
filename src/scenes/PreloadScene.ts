@@ -30,6 +30,12 @@ export class PreloadScene extends Phaser.Scene {
       margin: 0,
       spacing: 0
     });
+    this.load.spritesheet('lpc-chicken', '/assets/opengameart/lpc-chicken-rework/chicken.png', {
+      frameWidth: 32,
+      frameHeight: 32,
+      margin: 0,
+      spacing: 0
+    });
     this.createPixelTextures();
   }
 

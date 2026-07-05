@@ -1,0 +1,9 @@
+LPC Chicken Rework
+
+Source: https://opengameart.org/content/lpc-chicken-rework
+OpenGameArt submitter: AntumDeluge
+Attribution: Daniel Eddeland
+License used by SunnyFarm: CC-BY 3.0
+
+This asset is used for the chicken sprites in SunnyFarm.
+
