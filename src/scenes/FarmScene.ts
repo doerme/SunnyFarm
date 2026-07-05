@@ -104,7 +104,9 @@ export class FarmScene extends Phaser.Scene {
   }
 
   private drawMedievalCoop(centerX: number, centerY: number): void {
-    this.add.image(centerX, centerY - 6, 'coop').setDepth(4);
+    this.add.image(centerX, centerY - 10, 'animal-shed')
+      .setScale(1.25)
+      .setDepth(4);
     this.add.image(centerX - 68, centerY + 26, 'lpc-medieval-fence', 1)
       .setScale(0.9)
       .setDepth(3);
@@ -117,12 +119,14 @@ export class FarmScene extends Phaser.Scene {
   }
 
   private drawMedievalShop(centerX: number, centerY: number): void {
-    this.add.image(centerX, centerY - 2, 'shop').setDepth(4);
-    this.add.image(centerX - 58, centerY + 54, 'lpc-medieval-decor', 545)
-      .setScale(1)
+    this.add.image(centerX, centerY - 12, 'market-tent')
+      .setScale(0.82)
+      .setDepth(4);
+    this.add.image(centerX - 52, centerY + 58, 'lpc-medieval-decor', 545)
+      .setScale(0.95)
       .setDepth(5);
-    this.add.image(centerX + 56, centerY + 54, 'lpc-medieval-decor', 546)
-      .setScale(1)
+    this.add.image(centerX + 52, centerY + 58, 'lpc-medieval-decor', 546)
+      .setScale(0.95)
       .setDepth(5);
   }
 

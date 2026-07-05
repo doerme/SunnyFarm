@@ -54,6 +54,9 @@ export class PreloadScene extends Phaser.Scene {
       margin: 0,
       spacing: 0
     });
+    this.load.image('animal-shed', '/assets/opengameart/lpc-medieval-village-decorations/animal-shed.png');
+    this.load.image('market-stall', '/assets/opengameart/lpc-medieval-village-decorations/market-stall.png');
+    this.load.image('market-tent', '/assets/opengameart/lpc-medieval-village-decorations/market-tent.png');
     this.createPixelTextures();
   }
 
